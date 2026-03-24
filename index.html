@@ -12,11 +12,9 @@
         :root { --pol-blauw: #003082; --pol-geel: #fccb0b; --fout: #d52b1e; --bg: #f4f7f9; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
         
-        /* Login */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--pol-blauw); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .login-card { background: white; padding: 40px; border-radius: 12px; width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        /* Layout */
         .app-container { display: none; grid-template-columns: 1fr 420px; gap: 20px; max-width: 1600px; margin: 20px auto; padding: 0 20px; }
         .section { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
         h1, h2 { color: var(--pol-blauw); border-bottom: 4px solid var(--pol-geel); padding-bottom: 8px; margin-top: 0; }
@@ -32,10 +30,9 @@
         .btn-reset-feed { background: #e2e8f0; color: #4a5568; padding: 8px; width: 100%; margin-top: 20px; font-size: 0.75em; border: 1px solid #cbd5e0; }
         .btn-reset-focus { background: var(--fout); color: white; padding: 8px; width: 100%; margin-top: 10px; font-size: 0.75em; }
 
-        .feed-card { border-left: 8px solid var(--pol-blauw); padding: 15px; margin-bottom: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .feed-card { border-left: 8px solid var(--pol-blauw); padding: 15px; margin-bottom: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: pre-wrap; }
         .focus-box { background: #fffdf0; border: 2px dashed var(--pol-geel); padding: 20px; }
         
-        /* Sidebar */
         .sidebar { background: #2d3748; color: white; padding: 20px; border-radius: 8px; height: calc(100vh - 60px); overflow-y: auto; position: sticky; top: 20px; border-top: 10px solid var(--pol-geel); }
         .wet-art { margin-bottom: 25px; border-bottom: 1px solid #4a5568; padding-bottom: 15px; font-size: 0.9em; line-height: 1.5; }
         .wet-art b { color: var(--pol-geel); display: block; margin-bottom: 5px; }
@@ -46,7 +43,7 @@
 
 <div id="login-overlay">
     <div class="login-card">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AgKDA8XDxYfGAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBk7tyZAAALeUlEQVR42u2deXBU1R3HP+fubpYshI0ESEIWpIDKqMgisihisSptp9ZpZ6pOHS06TrWOnTrWdqodp860jrW2Y6fWdqY6HaeOnVqLIsis7AmEJSwhIAnZ9+S9f/yRhSAsIdm9u8m99/uZOXNm7vL7vXvP75zf73dfAtXUVE1N1dRUrdpUo9YvH0Cq/v0Aav3yAdT65QOQqi6vAdC6vAbp6vIaAJKuLq8BIOnq8hoAsq6uD8At69Y8/8NVK999v7T067KysidmZ2e7Z2Vnu8vKyp6YlZ3tPizH/1Z56ZfvrFr57ltWrXn+hx98v65p3ZrnAeg6ALquA6DrAOg6ALquAyDr6roALF+6+OfLF85/v3re3K9mTZ/+1azp07+aNX36V7NmzPxy1oyZX86YMePrGdO+mX7H9GlfXzN92tcrp0/7+urJ6f+YmD7962unTf961pS0f0xIn/7VtOmzvpox88vZM2Z+OWv69K9mTZ/+1ayZM798p3re3K9mL5j/7vKli3++fOniCwCuA6DrAOg6ALquA6DrAOg6ALqurg/AkiWfL188f9H7888976vZM88/NnvOuef9uN55V6u6uq6fAHL98gHk+uUDyPX65QMIVpdaP4Bgdal1AwRWl1o/QEC6unoAhCpfXp0AVf78OAGq/PlzAlT58+8EsPLn7waw8uf/B8CKn/8vACv//v8ArPz7/wOw8h+E/T6o9f8v6v1f1PvV+v8X9X61/v9FvV+t/39R71fr/1/U+9X6Pwb1frX+P0a9X63/j1HvV+v/Y9T7/wf1/hD6/+F/9C1S/68aqv6fGqr+f2qo+r9qqPr/qaHqP6eh6j+noeqf01D1z2mo+uc0VP3rNVS6f/8aKt2/Zg2V7l+7hkr371VDpYfXraHSretXf+mBteuodN/6NVR6eN06Kj2yfgOVHlm/gUqPr99Ipcc3bKTSExs3UunJTRup9PTmzVR6ZstWKg2v3UqloXVbqeS+Y6uSu+64Tcl9796u5Nf371By/8atSh7YtFXJQ+98UMlDH35UyUNbP1Hy0NfPKnlo7ueVPPTA7p1KHvp0j5L79+9U8vDBvUruef8uJQ8fPKDkvgP7lNy7/6CSez86pGR6RkZIny6pYv/EAn368L+W7P/S+f9fSvP/p6X6v7V0/v+30v3/3Uov9v97K/7971709/+pYv3/bMX/L1f4f6li/P9yxfj/lYr9f6li/P9vK8T//77i+f/fK8T/71Z8/v/vKp7/9ytOfq7h5OdaTn6uY+XnGleZ/P9vXKXp/797lad//55Vmf8f+Ksy/f/3qsj/f68K//97Zej/v1f6/v97Zej/v1eG/v97pff/v1f6/v97pef/v1d6/v97pef/v1dm/v+fMvP/v2Xm///PZeb/f6TM///PZeb///mY+f/PZeb//6TM/P8/FDP//w8x8///UMz8/48U8v9/rJD//6FC/v+PF/L/f6KQ//8Thfz/HxXy/38skP9/uJD//2MB/P+PCuD/fyKA//9XAfz/rwL4/68A/P87BfD/vxPA//9EAP//owD+/6cC+P+XAvj/XwL4/18C+P+XAvj/mwL4/58C+P+fA+mZ7/03AAAAAElFTkSuQmCC" width="80" alt="Politie Logo">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AgKDA8XDxYfGAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBk7tyZAAALeUlEQVR42u2deXBU1R3HP+fubpYshI0ESEIWpIDKqMgisihisSptp9ZpZ6pOHS06TrWOnTrWdqodp860jrW2Y6fWdqY6HaeOnVqLIsis7AmEJSwhIAnZ9+S9f/yRhSAsIdm9u8m99/uZOXNm7vL7vXvP75zf73dfAtXUVE1N1dRUrdpUo9YvH0Cq/v0Aav3yAdT65QOQqi6vAdC6vAbp6vIaAJKuLq8BIOn/o8hoAsq6uD8At69Y8/8NVK999v7T067KysidmZ2e7Z2Vnu8vKyp6YlZ3tPizH/1Z56ZfvrFr57ltWrXn+hx98v65p3ZrnAeg6ALquA6DrAOg6ALquAyDr6roALF+6+OfLF85/v3re3K9mTZ/+1azp07+aNX36V7NmzPxy1oyZX86YMePrGdO+mX7H9GlfXzN92tcrp0/7+urJ6f+YmD7962unTf961pS0f0xIn/7VtOmzvpox88vZM2Z+OWv69K9mTZ/+1ayZM798p3re3K9mL5j/7vKli3++fOniCwCuA6DrAOg6ALquA6DrAOg6ALqurg/AkiWfL188f9H7888976vZM88/NnvOuef9uN55V6u6uq6fAHL98gHk+uUDyPX65QMIVpdaP4Bgdal1AwRWl1o/QEC6unoAhCpfXp0AVf78OAGq/PlzAlT58+8EsPLn7waw8uf/B8CKn/8vACv//v8ArPz7/wOw8h+E/T6o9f8v6v1f1PvV+v8X9X61/v9FvV+t/39R71fr/1/U+9X6Pwb1frX+P0a9X63/j1HvV+v/Y9T7/wf1/hD6/+F/9C1S/68aqv6fGqr+f2qo+r9qqPr/qaHqP6eh6j+noeqf01D1z2mo+uc0VP3rNVS6f/8aKt2/Zg2V7l+7hkr371VDpYfXraHSretXf+mBteuodN/6NVR6eN06Kj2yfgOVHlm/gUqPr99Ipcc3bKTSExs3UunJTRup9PTmzVR6ZstWKg2v3UqloXVbqeS+Y6uSu+64Tcl9796u5Nf371By/8atSh7YtFXJQ+98UMlDH35UyUNbP1Hy0NfPKnlo7ueVPPTA7p1KHvp0j5L79+9U8vDBvUruef8uJQ8fPKDkvgP7lNy7/6CSez86pGR6RkZIny6pYv/EAn368L+W7P/S+f9fSvP/p6X6v7V0/v+30v3/3Uov9v97K/7971709/+pYv3/bMX/L1f4f6li/P9yxfj/lYr9f6li/P9vK8T//77i+f/fK8T/71Z8/v/vKp7/9ytOfq7h5OdaTn6uY+XnGleZ/P9vXKXp/797lad//55Vmf8f+Ksy/f/3qsj/f68K//97Zej/v1f6/v97Zej/v1eG/v97pff/v1f6/v97pef/v1d6/v97pef/v1dm/v+fMvP/v2Xm///PZeb/f6TM///PZeb///mY+f/PZeb//6TM/P8/FDP//w8x8///UMz8/48U8v9/rJD//6FC/v+PF/L/f6KQ//8Thfz/HxXy/38skP9/uJD//2MB/P+PCuD/fyKA//9XAfz/rwL4/68A/P87BfD/vxPA//9EAP//owD+/6cC+P+XAvj/XwL4/18C+P+XAvj/mwL4/58C+P+fA+mZ7/03AAAAAElFTkSuQmCC" width="80" alt="Politie Logo">
         <h2>Inloggen Q4 Les 1</h2>
         <select id="select-klas">
             <option value="Alpha">Alpha</option><option value="Bravo">Bravo</option>
@@ -64,27 +61,21 @@
 <div class="app-container" id="app-main">
     <div class="left-col">
         <div class="section">
-            <h1 id="welcome-header">PV Bevindingen</h1>
+            <h1 id="welcome-header">PV van Bevindingen</h1>
             <div class="video-box">
                 <iframe src="https://www.youtube.com/embed/D0iEseCCcvw?start=1630" allowfullscreen></iframe>
             </div>
             
-            <label>1. Moment van Aanhouding (Dag/Datum/Tijd):</label>
-            <input type="text" id="pv-tijd" placeholder="Bijv: Dinsdag 24 maart 2026, omstreeks 13:58 uur">
+            <label>Stel hier je PV op (Tijdstip, Feiten en Bestanddelen):</label>
+            <textarea id="pv-tekst" style="height:350px;" placeholder="Op dinsdag 24 maart 2026, omstreeks... zag ik dat... dit is in strijd met artikel..."></textarea>
             
-            <label>2. Feiten en Omstandigheden (Objectief):</label>
-            <textarea id="pv-feiten" style="height:120px;" placeholder="Wat neem je waar?"></textarea>
-            
-            <label>3. Juridische Bestanddelen (Volledige tekst uit wet):</label>
-            <textarea id="pv-wet" style="height:120px;" placeholder="Kopieer de tekst uit de zijbalk..."></textarea>
-            
-            <button class="btn btn-primary" onclick="verstuurPV()">PV Indienen</button>
+            <button class="btn btn-primary" onclick="verstuurPV()">PV Indienen bij Klasfeed</button>
         </div>
 
         <div class="section focus-box">
             <h2>🎯 Verzamelscherm (Feedback voor Les 2)</h2>
-            <p><small>Noteer hier de feedback die je krijgt. Deze leerdoelen blijven staan voor de volgende les.</small></p>
-            <textarea id="focus-input" style="height:100px; border-color:var(--pol-geel);" placeholder="Waar ga je de volgende keer op letten?" onblur="updateFocus()"></textarea>
+            <p><small>Noteer hier de kernpunten uit de gekregen feedback.</small></p>
+            <textarea id="focus-input" style="height:100px; border-color:var(--pol-geel);" placeholder="Waar ga je de volgende les extra op letten?" onblur="updateFocus()"></textarea>
         </div>
 
         <h2 style="margin-top:20px;">Live Feed: Klas <span id="klas-label"></span></h2>
@@ -92,14 +83,14 @@
     </div>
 
     <div class="sidebar">
-        <h2>Wetboek (Volledig)</h2>
+        <h2>Wetboek (Referentie)</h2>
         <div class="wet-art">
             <b>Artikel 184 Sr</b>
-            Hij die <span class="hl">opzettelijk niet voldoet</span> aan een <span class="hl">bevel of een vordering</span>, krachtens wettelijk voorschrift gedaan door een ambtenaar met de uitoefening van enig toezicht belast of door een ambtenaar belast met of bevoegd verklaard tot het opsporen of onderzoeken van strafbare feiten, alsmede hij die opzettelijk enige handeling belet, belemmert of verijdelt door een van die ambtenaren ondernomen ter uitvoering van enig wettelijk voorschrift, wordt gestraft met gevangenisstraf van ten hoogste drie maanden of geldboete van de tweede categorie.
+            Hij die <span class="hl">opzettelijk niet voldoet</span> aan een <span class="hl">bevel of een vordering</span>, krachtens wettelijk voorschrift gedaan door een ambtenaar met de uitoefening van enig toezicht belast of door een ambtenaar belast met of bevoegd verklaard tot het opsporen of onderzoeken van strafbare feiten... wordt gestraft met gevangenisstraf van ten hoogste drie maanden of geldboete van de tweede categorie.
         </div>
         <div class="wet-art">
             <b>Artikel 266 Sr</b>
-            Elke <span class="hl">opzettelijke belediging</span> die niet het karakter van smaad of smaadschrift draagt, hetzij in het openbaar mondeling of bij geschrift of afbeelding, hetzij iemand <span class="hl">in zijn tegenwoordigheid</span> mondeling of bij feitelijkheid, hetzij door een aan hem toegezonden of aangeboden geschrift of afbeelding, aangedaan, wordt als eenvoudige belediging gestraft met gevangenisstraf van ten hoogste drie maanden of geldboete van de tweede categorie.
+            Elke <span class="hl">opzettelijke belediging</span> die niet het karakter van smaad of smaadschrift draagt, hetzij in het openbaar mondeling of bij geschrift of afbeelding, hetzij iemand <span class="hl">in zijn tegenwoordigheid</span> mondeling of bij feitelijkheid... aangedaan, wordt gestraft met gevangenis van ten hoogste drie maanden.
         </div>
         <div class="wet-art">
             <b>Artikel 267 Sr</b>
@@ -117,7 +108,6 @@
 </div>
 
 <script>
-    // Firebase configuratie
     const firebaseConfig = {
         apiKey: "AIzaSyA3_rzoZOWytlyAbYKKe_WuFlD8z2WvbX4",
         authDomain: "aangifteq2les1.firebaseapp.com",
@@ -147,12 +137,13 @@
     }
 
     function verstuurPV() {
-        if(!document.getElementById('pv-feiten').value) return alert("Vul eerst je bevindingen in.");
+        const tekst = document.getElementById('pv-tekst').value;
+        if(!tekst) return alert("Je hebt nog niets geschreven.");
+        
         db.ref(`klassen/${huidigeKlas}/pvs`).push({
             naam: mijnNaam,
-            tijdstip: document.getElementById('pv-tijd').value,
-            feiten: document.getElementById('pv-feiten').value,
-            wet: document.getElementById('pv-wet').value
+            inhoud: tekst,
+            timestamp: Date.now()
         });
         alert("PV succesvol ingediend!");
     }
@@ -163,19 +154,18 @@
     }
 
     function resetFeed() {
-        if(confirm("Weet je zeker dat je alle PV's uit de feed wilt wissen? De leerdoelen blijven bewaard.")) {
+        if(confirm("Alle ingediende PV's wissen?")) {
             db.ref(`klassen/${huidigeKlas}/pvs`).remove();
         }
     }
 
     function resetFocus() {
-        if(confirm("LET OP: Dit wist ALLE leerdoelen van de hele klas. Doorgaan?")) {
+        if(confirm("DIT WIST ALLE LEERDOELEN. Doorgaan?")) {
             db.ref(`klassen/${huidigeKlas}/focus`).remove();
         }
     }
 
     function luisterNaarData() {
-        // Feed inladen
         db.ref(`klassen/${huidigeKlas}/pvs`).on('value', snap => {
             const feed = document.getElementById('klas-feed');
             feed.innerHTML = "";
@@ -184,14 +174,11 @@
                 feed.innerHTML += `
                     <div class="feed-card">
                         <div style="color:var(--pol-blauw); font-weight:bold; border-bottom:1px solid #eee; margin-bottom:10px;">Agent: ${pv.naam}</div>
-                        <p><b>Moment:</b> ${pv.tijdstip}</p>
-                        <p><b>Feiten:</b> ${pv.feiten}</p>
-                        <p><i><b>Bestanddelen:</b> ${pv.wet}</i></p>
+                        ${pv.inhoud}
                     </div>`;
             });
         });
 
-        // Eigen leerdoelen inladen
         db.ref(`klassen/${huidigeKlas}/focus/${mijnNaam}`).on('value', s => {
             if(s.exists()) {
                 document.getElementById('focus-input').value = s.val();
