@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Politieacademie - PV Training Q2 - Dossier Aanhouding</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+        :root { --pol-blauw: #003082; --pol-geel: #fccb0b; --fout: #d52b1e; --bg: #f4f7f9; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; }
+        
+        /* LOGIN */
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--pol-blauw); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: white; padding: 40px; border-radius: 12px; width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        
+        /* LAYOUT */
+        .app-container { display: none; grid-template-columns: 1fr 380px; gap: 20px; max-width: 1500px; margin: 20px auto; padding: 0 20px; }
+        .section { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        
+        h1, h2 { color: var(--pol-blauw); margin-top: 0; border-bottom: 3px solid var(--pol-geel); padding-bottom: 5px; }
+        
+        .video-box { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000; margin-bottom: 15px; }
+        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        textarea, select, input { width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #cbd5e0; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+        
+        .btn { cursor: pointer; border: none; border-radius: 4px; font-weight: bold; transition: 0.2s; }
+        .btn-primary { background: var(--pol-blauw); color: white; padding: 15px; width: 100%; font-size: 1.1em; }
+        .btn-fb { background: var(--pol-geel); color: var(--pol-blauw); padding: 6px 12px; margin-top: 5px; font-size: 0.8em; }
+
+        /* FEEDBACK & FOCUS */
+        .feed-card { border-left: 8px solid var(--pol-blauw); padding: 15px; margin-bottom: 20px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .feedback-area { background: #edf2f7; padding: 10px; margin-top: 10px; border-radius: 4px; }
+        .focus-box { background: #fffdf0; border: 2px dashed var(--pol-geel); padding: 20px; }
+        
+        /* WETBOEK SIDEBAR */
+        .sidebar { background: #2d3748; color: white; padding: 20px; border-radius: 8px; height: calc(100vh - 60px); overflow-y: auto; position: sticky; top: 20px; }
+        .wet-art { margin-bottom: 15px; border-bottom: 1px solid #4a5568; padding-bottom: 10px; font-size: 0.85em; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+<div id="login-overlay">
+    <div class="login-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Politielogo.svg/1200px-Politielogo.svg.png" width="80" alt="Politie">
+        <h2 style="border:none;">Inloggen Natoklas</h2>
+        <select id="select-klas">
+            <option value="Alpha">Alpha</option>
+            <option value="Bravo">Bravo</option>
+            <option value="Charlie">Charlie</option>
+            <option value="Delta">Delta</option>
+            <option value="Echo">Echo</option>
+            <option value="Foxtrot">Foxtrot</option>
+            <option value="Golf">Golf</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Juliet">Juliet</option>
+            <option value="Kilo">Kilo</option>
+            <option value="Lima">Lima</option>
+            <option value="Mike">Mike</option>
+        </select>
+        <input type="text" id="user-name" placeholder="Voornaam..." style="margin-top:15px;">
+        <button class="btn btn-primary" onclick="startSessie()" style="margin-top:20px;">INLOGGEN</button>
+    </div>
+</div>
+
+<div class="app-container" id="app-main">
+    <div class="left-col">
+        <div class="section">
+            <h1 id="welcome-header">PV Bevindingen</h1>
+            <div class="video-box">
+                <iframe src="https://www.youtube.com/embed/D0iEseCCcvw?start=1630" allowfullscreen></iframe>
+            </div>
+            
+            <label><b>Dag, Datum en Tijdstip aanhouding:</b></label>
+            <input type="text" id="pv-tijd" placeholder="Bijv: Dinsdag 24 maart 2026, omstreeks 13:45 uur">
+            
+            <label style="margin-top:15px; display:block;"><b>Feiten en Omstandigheden (Objectieve waarneming):</b></label>
+            <textarea id="pv-feiten" style="height:120px;"></textarea>
+            
+            <label style="margin-top:15px; display:block;"><b>Bestanddeelteksten uit het Wetboek:</b></label>
+            <textarea id="pv-wet" style="height:120px;"></textarea>
+            
+            <button class="btn btn-primary" onclick="verstuurPV()" style="margin-top:15px;">PV INDIENEN BIJ KLASFEED</button>
+        </div>
+
+        <div class="section focus-box">
+            <h2>🎯 Mijn Persoonlijke Leerpunten (Verzamelscherm)</h2>
+            <p><small>Kopieer hier de belangrijkste feedbackpunten die je hieronder ontvangt. Deze lijst gebruiken we als startpunt voor de volgende les.</small></p>
+            <textarea id="focus-input" style="height:100px; border-color:var(--pol-geel);" placeholder="Wat ga je de volgende keer anders doen? Bijv: Ik moet Art. 184 Sr vollediger citeren..." onblur="updateFocus()"></textarea>
+        </div>
+
+        <h2 style="margin-top:30px;">Live Feed: Klas <span id="klas-label"></span></h2>
+        <div id="klas-feed"></div>
+    </div>
+
+    <div class="sidebar">
+        <h2 style="color:var(--pol-geel); border-color:var(--pol-geel);">Wetboek Referentie</h2>
+        <div class="wet-art">
+            <b>Art. 184 Sr:</b> "Hij die opzettelijk niet voldoet aan een bevel of een vordering, krachtens wettelijk voorschrift gedaan door een ambtenaar..."
+        </div>
+        <div class="wet-art">
+            <b>Art. 266 Sr:</b> "Elke opzettelijke belediging die niet het karakter van smaad of smaadschrift draagt... aangedaan in tegenwoordigheid mondeling..."
+        </div>
+        <div class="wet-art">
+            <b>Art. 267 Sr:</b> Verhoging van straf met een derde indien de belediging wordt aangedaan aan een ambtenaar in functie.
+        </div>
+        <div class="wet-art">
+            <b>Art. 53 Sv:</b> "Bij ontdekking op heterdaad is ieder bevoegd de verdachte aan te houden."
+        </div>
+        <button class="btn" onclick="resetData()" style="background:none; color:#718096; font-size:0.7em; margin-top:20px;">Reset Klasdata (Docent)</button>
+    </div>
+</div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyA3_rzoZOWytlyAbYKKe_WuFlD8z2WvbX4",
+        authDomain: "aangifteq2les1.firebaseapp.com",
+        databaseURL: "https://aangifteq2les1-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "aangifteq2les1",
+        storageBucket: "aangifteq2les1.firebasestorage.app",
+        messagingSenderId: "1071661084879",
+        appId: "1:1071661084879:web:ec81dfed806ad75a8847ba"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let huidigeKlas = "";
+    let mijnNaam = "";
+
+    function startSessie() {
+        huidigeKlas = document.getElementById('select-klas').value;
+        mijnNaam = document.getElementById('user-name').value.trim();
+        if(!mijnNaam) return alert("Vul je voornaam in.");
+
+        document.getElementById('login-overlay').style.display = 'none';
+        document.getElementById('app-main').style.display = 'grid';
+        document.getElementById('klas-label').innerText = huidigeKlas;
+        document.getElementById('welcome-header').innerText = `PV Bevindingen - Agent ${mijnNaam}`;
+        
+        luisterNaarFeed();
+        luisterNaarFocus();
+    }
+
+    function verstuurPV() {
+        const data = {
+            naam: mijnNaam,
+            tijdstip: document.getElementById('pv-tijd').value,
+            feiten: document.getElementById('pv-feiten').value,
+            wet: document.getElementById('pv-wet').value,
+            ts: Date.now()
+        };
+        db.ref(`klassen/${huidigeKlas}/pvs`).push(data);
+        alert("PV succesvol verzonden naar de klas!");
+    }
+
+    function geefFeedback(pvId) {
+        const fbTekst = document.getElementById(`fb-input-${pvId}`).value;
+        if(!fbTekst) return;
+        db.ref(`klassen/${huidigeKlas}/pvs/${pvId}/feedback`).push({
+            van: mijnNaam,
+            tekst: fbTekst
+        });
+        document.getElementById(`fb-input-${pvId}`).value = "";
+    }
+
+    function updateFocus() {
+        const tekst = document.getElementById('focus-input').value;
+        db.ref(`klassen/${huidigeKlas}/focus/${mijnNaam}`).set(tekst);
+    }
+
+    function luisterNaarFocus() {
+        db.ref(`klassen/${huidigeKlas}/focus/${mijnNaam}`).on('value', s => {
+            if(s.exists()) document.getElementById('focus-input').value = s.val();
+        });
+    }
+
+    function luisterNaarFeed() {
+        db.ref(`klassen/${huidigeKlas}/pvs`).on('value', snap => {
+            const feed = document.getElementById('klas-feed');
+            feed.innerHTML = "";
+            let entries = [];
+            snap.forEach(c => { entries.push({id: c.key, ...c.val()}); });
+            entries.reverse().forEach(pv => {
+                let fbHtml = "";
+                if(pv.feedback) {
+                    Object.values(pv.feedback).forEach(f => {
+                        fbHtml += `<div style="border-bottom:1px solid #cbd5e0; padding:5px 0;"><b>${f.van}:</b> ${f.tekst}</div>`;
+                    });
+                }
+                feed.innerHTML += `
+                    <div class="feed-card">
+                        <div style="color:var(--pol-blauw); font-weight:bold; margin-bottom:10px; border-bottom:1px solid #eee;">
+                            Agent: ${pv.naam} | Tijdstip: ${pv.tijdstip}
+                        </div>
+                        <p><b>Feiten:</b> ${pv.feiten}</p>
+                        <p><i><b>Bestanddelen:</b> ${pv.wet}</i></p>
+                        <div class="feedback-area">
+                            <strong>Feedback van klasgenoten:</strong>
+                            <div style="margin:10px 0;">${fbHtml || 'Nog geen feedback...'}</div>
+                            <div style="display:flex; gap:5px;">
+                                <input type="text" id="fb-input-${pv.id}" placeholder="Typ feedback..." style="height:35px; margin:0;">
+                                <button class="btn btn-fb" onclick="geefFeedback('${pv.id}')">VERSTUUR</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    }
+
+    function resetData() {
+        if(confirm("Wis alle data voor deze klas?")) db.ref(`klassen/${huidigeKlas}`).remove();
+    }
+</script>
+</body>
+</html>
